@@ -1,6 +1,6 @@
 {
     "name": "johnbillion/wp-hooks",
-    "description": "WordPress actions and filters in machine-readable JSON format.",
+    "description": "WordPress core actions and filters in machine-readable JSON format.",
     "type": "library",
     "license": "GPL-3.0-or-later",
     "authors": [
@@ -13,49 +13,42 @@
 		"sort-packages": true
 	},
     "scripts": {
-        "post-update-cmd": [
-            "rm -f vendor/wordpress/wordpress/wp-admin/includes/deprecated.php",
-            "rm -f vendor/wordpress/wordpress/wp-includes/deprecated.php",
-            "rm -f vendor/wordpress/wordpress/wp-admin/includes/ms-deprecated.php",
-            "rm -f vendor/wordpress/wordpress/wp-includes/ms-deprecated.php",
-            "rm -rf vendor/wordpress/wordpress/wp-content",
-            "rm -rf vendor/wordpress/wordpress/wp-includes/ID3",
-            "rm -rf vendor/wordpress/wordpress/wp-includes/IXR",
-            "rm -rf vendor/wordpress/wordpress/wp-includes/pomo",
-            "rm -rf vendor/wordpress/wordpress/wp-includes/random_compat",
-            "rm -rf vendor/wordpress/wordpress/wp-includes/Requests",
-            "rm -rf vendor/wordpress/wordpress/wp-includes/SimplePie",
-            "rm -rf vendor/wordpress/wordpress/wp-includes/sodium_compat",
-            "rm -rf vendor/wordpress/wordpress/wp-includes/Text"
-        ],
-        "generate": "@composer generate-from -- vendor/wordpress/wordpress hooks",
-        "generate-from": "@php -f src/generate.php",
-        "validate-files": [
-            "@composer validate-from -- hooks/actions.json",
-            "@composer validate-from -- hooks/filters.json"
-        ],
-        "validate-from": "@php -f src/validate.php"
+        "generate": "wp-hooks-generator --input vendor/wordpress/wordpress --output hooks"
     },
     "scripts-descriptions": {
-        "generate": "Generates the hook files for WordPress nightly",
-        "generate-from": "Generates the hook files for a given source directory",
-        "validate-files": "Validates the generated files against the schema",
-        "validate-from": "Validates a given file against the schema"
+        "generate": "Generates the hook files for WordPress nightly"
+    },
+    "repositories": {
+        "johnbillion/wp-hooks-generator": {
+            "type": "path",
+            "url": "/sites/wp-hooks-generator",
+            "options": {
+                "symlink": true
+            }
+        }
     },
     "require-dev": {
-        "php": ">=7",
+        "johnbillion/wp-hooks-generator": "@dev",
         "oomphinc/composer-installers-extender": "^1.1",
-        "opis/json-schema": "^1",
-        "roots/wordpress": "dev-nightly",
-        "wordpress/phpdoc-parser": "dev-master"
+        "roots/wordpress": "dev-nightly"
     },
     "minimum-stability": "dev",
 	"extra": {
         "wordpress-install-dir": "vendor/wordpress/wordpress",
-        "installer-paths": {
-            "vendor/wordpress/{$name}/": [
-                "wordpress/phpdoc-parser"
-            ]
-        }
+        "wp-hooks-ignore": [
+            "wp-admin/includes/deprecated.php",
+            "wp-admin/includes/ms-deprecated.php",
+            "wp-content/",
+            "wp-includes/deprecated.php",
+            "wp-includes/ID3/",
+            "wp-includes/IXR/",
+            "wp-includes/ms-deprecated.php",
+            "wp-includes/pomo/",
+            "wp-includes/random_compat/",
+            "wp-includes/Requests/",
+            "wp-includes/SimplePie/",
+            "wp-includes/sodium_compat/",
+            "wp-includes/Text/"
+        ]
 	}
 }

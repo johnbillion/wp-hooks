@@ -1,6 +1,6 @@
 # wp-hooks
 
-WordPress actions and filters in machine-readable JSON format.
+WordPress core actions and filters in machine-readable JSON format.
 
 **Note:** This is still a work in progress. The code that generates the actions and filters data is not yet complete.
 
@@ -58,20 +58,8 @@ import { Hooks, Hook, Doc, Tags, Tag } from '@johnbillion/wp-hooks/interface';
 
 ## JSON Schema
 
-The JSON schema can be found in [`schema.json`](schema.json).
-
-## Implementation Details
-
-The hook extraction component of the [WP Parser library](https://github.com/WordPress/phpdoc-parser) is used to scan files in order to generate the hook data. WordPress nightly is used so hooks are always up to date.
+The JSON schema can be found in [`hooks/schema.json`](hooks/schema.json).
 
 ## Regenerating the Hook Files
 
 `composer generate`
-
-## Validating the Hook Files
-
-`composer validate-files`
-
-## Regenerating the TypeScript Interfaces
-
-`npm run generate-interfaces`
